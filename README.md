@@ -7,4 +7,9 @@ We are given data sets consisting of data collection from bike sharing schemes o
 
 Here, I have chosen to implement an interactive predictor in order to use Shiny. The predictor takes in some of the features, and output the expected rental count of bikes based on the input values. The model is intentionally kept simple, and is not intended for submission to Kaggle. Details of the model are discussed in the "Model" section.
 
+usage
+======================
+
+To use the application, you can select parameters from the left pain using the sliders, drop down lists, and checkboxes. The result should show up in the top pane automatically. Please note that a model is generated from a moderately sized data set on first load. However, the model is resused as you select parameters. As such, responses for changing parameter values should be quite quick. If it seems like nothing is happening, please refresh the page.
+
 To use the project from source code, you can simply open the server.R file in R studio. Please ensure the www folder and the train.csv files are in the root folder, and that the root folder is the current working directory.
