@@ -1,0 +1,196 @@
+<html>
+<head title="bikeshare - ashic">
+	<link rel='stylesheet' href='css/bootstrap.min.css' />
+	<link rel='stylesheet' href='css/bootstrap-theme.min.css' />
+	<link rel='stylesheet' href='css/shiny.css' />
+	<link rel='stylesheet' href='css/normalize.css' />
+	<link rel='stylesheet' href='css/stylesheet.css' />
+	<link rel='stylesheet' href='css/selectize.bootstrap2.css' />
+
+	<link rel='stylesheet' href='css/jquery.slider.min.css' />
+
+<script type='text/javascript' src='js/json2-min.js'></script>
+<script type='text/javascript' src='js/jquery.js'></script>
+<script type='text/javascript' src='js/bootstrap.min.js'></script>
+<script type='text/javascript' src='js/shiny.js'></script>
+
+
+<!--[if lt IE 9]>
+<script src="js/es5-shim.min.js"></script>
+<![endif]-->
+
+<script type='text/javascript' src='js/selectize.min.js'></script>
+<script type='text/javascript' src='js/jquery.slider.min.js'></script>
+
+    <link rel="stylesheet" href="css/highlight/styles/default.css">
+    <script src="js/highlight.pack.js"></script>
+
+</head>
+
+
+<body>
+
+
+
+
+<div class='container'>
+    <div class="row" id="main-header">
+        <img src="css/bike.png" class="col-md-3" alt="logo" />
+        <h1 class="col-md-9">
+            Bike Sharing Demand Predictor
+        </h1>
+    </div>
+
+	<div class='row'>
+		<div class='col-md-3 container'>
+			<form class="well">
+		        
+
+                <div>
+                    <label class="control-label" for="hour">Hour: </label>
+                    <input id="hour" type="slider" name="hour" value="10" class="jslider" data-from="0" data-to="24" data-step="1" data-skin="plastic" data-round="FALSE" data-locale="us" data-smooth="FALSE" />
+                </div>
+                <br />
+
+                <div>
+                    <label class="control-label" for="season">Season: </label>
+                    <select id="season">
+                        <option value="1" selected>Spring</option>
+                        <option value="2">Summer</option>
+                        <option value="3">Autumn</option>
+                        <option value="4">Winter</option>
+                    </select>
+                    <script type="application/json" data-for="season" data-nonempty="">{}</script>
+                </div>
+
+                <br />
+
+                <div>
+                    <label class="control-label" for="holiday">Holiday: </label>
+                    <input type="checkbox" id="holiday" />
+                </div>
+                <br />
+
+                <div>
+                    <label class="control-label" for="workingday">Working Day: </label>
+                    <input type="checkbox" id="workingday" checked="checked" />
+                </div>
+
+                <br />
+
+                <div>
+                    <label class="control-label" for="weather">Weather: </label>
+                    <select id="weather">
+                        <option value="1" selected>Clear, Few Clouds</option>
+                        <option value="2">Mist, Cloudy, Broken Clouds</option>
+                        <option value="3">Light Snow, Light Rain</option>
+                        <option value="4">Heavy Rain, Ice, Snow, Fog</option>
+                    </select>
+                    <script type="application/json" data-for="weather" data-nonempty="">
+                        {}
+                    </script>
+                </div>
+                <br />
+
+                <div>
+                    <label class="control-label" for="atemp">Feels Like Temp (C): </label>
+                    <input id="atemp" type="slider" name="atemp" value="20" class="jslider" data-from="-20" data-to="50" data-step="1" data-skin="plastic" data-round="FALSE" data-locale="us" data-smooth="FALSE" />
+                </div>
+
+                <br />
+                <div>
+                    <label class="control-label" for="humidity">Humidity: </label>
+                    <input id="humidity" type="slider" name="humidity" value="65" class="jslider" data-from="0" data-to="100" data-step="1" data-skin="plastic" data-round="FALSE" data-locale="us" data-smooth="FALSE" />
+                </div>
+                <br />
+
+                <div>
+                    <label class="control-label" for="windspeed">Windspeed: </label>
+                    <input id="windspeed" type="slider" name="windspeed" value="6" class="jslider" data-from="0" data-to="70" data-step="1" data-skin="plastic" data-round="FALSE" data-locale="us" data-smooth="FALSE" />
+                </div>
+
+		      </form>
+			</div>
+			<div class='col-md-9'>
+                <div class="main-content well alert alert-success" id="output">
+                    The predicted demand is: <div id="count" class="shiny-text-output">.</div> 
+                </div>
+                
+                <div class="main-content well">
+                    <ul id="tabs" class="nav nav-pills" data-tabs="tabs">
+                        <li class="active"><a href="#readme" data-toggle="tab">Read Me</a></li>
+                        <li><a href="#instructions" data-toggle="tab">Usage Instructions</a></li>
+                        <li><a href="#model" data-toggle="tab">Model</a></li>
+                        <li><a href="#license" data-toggle="tab">License</a></li>
+                    </ul>
+                    <hr />
+                    <div id="main-tab-content" class="tab-content">
+                        <div class="tab-pane active" id="readme">
+                            <p>This is a partial (and interactive) solution to the Bike Share Demand Kaggle competition. The details of the problem can be found <a href='http://www.kaggle.com/c/bike-sharing-demand/data'>here</a>.</p>
+                            <p>We are given data sets consisting of data collection from bike sharing schemes over two years - between January, 2011 and December, 2012. The training data set (train.csv) corresponds to the 
+                            first 19 days of each month, and the test data (test.csv) contains data about the remaining days. Features include the date and time (granular to the hour) of each record, and the season, weather condition, 
+                            temperature, "feels like" temperature, windspeed, whether the day is a holiday or not, whether it is a workday (or not, i.e. a weekend), and humidity at that time. The training set also contains data on 
+                            how many registered and non registered users rented a bike in that period, along with the total count. Based on this data, we are to come up with a training model that can predict the count of rentals for the test
+                            data set, at least - that's the target for the Kaggle competition.</p>
+                            <p>
+                                Here, I have chosen to implement an interactive predictor in order to use Shiny. The predictor takes in some of the features, and output the expected rental count of bikes based on the input values. The model
+                                is intentionally kept simple, and is not intended for submission to Kaggle. Details of the model are discussed in the "Model" section.
+                            </p>
+                        </div>
+                        <div class="tab-pane" id="instructions">
+                            <p>To use the application, you can select parameters from the left pain using the sliders, drop down lists, and checkboxes. The result should show up in the top pane automatically.
+                            Please note that a model is generated from a moderately sized data set on first load. However, the model is resused as you select parameters. As such, responses for changing parameter values 
+                            should be quite quick. If it seems like nothing is happening, please refresh the page.</p>
+                        </div>
+                        <div class="tab-pane" id="model">
+                            <p>
+                                The model used is a generalised linear model considering a subset of the features provided. A few transformations are done on the input features:
+                                <ul>
+                                    <li>The hour is extracted from the date time field. The date time field is discarded.</li>
+                                    <li>Temp is dropped in favour of atemp.</li>
+                                    <li>Only total counts are considered.</li>
+                                </ul>
+                            </p>
+                            <p>
+                                With the cleaned up data, glm from the stats package is used to apply a simple generalised linear model. We could gain a better model by applying cross validation, boosting (in practice, boosting methods like
+                                gbm, and cubist provide significantly better results on this problem), or random forests. However the model chosen provides enough variance to ensure inputs are responsive, and seeing that the goal of this
+                                project is to show case Shiny (not finding the optimal machine learning algorithm), the generalised linear model works well enough. The formula for the model is: count ~ ., where the data is the cleaned up 
+                                training data.
+                            </p>
+                        </div>
+                        <div class="tab-pane" id="license">
+                            <p>The source code is licensed under Mozilla 2 License. Details can be found <a href="https://github.com/ashic/bikeshare-data-product/blob/master/LICENSE">here</a>.</p>
+                            <p>The dataset was provided by Hadi Fanaee Tork using data from Capital Bikeshare. I also thank the UCI machine learning repository for hosting the dataset. If you use the problem in publication, please cite:<br />
+                            Fanaee-T, Hadi, and Gama, Joao, Event labeling combining ensemble detectors and background knowledge, Progress in Artificial Intelligence (2013): pp. 1-15, Springer Berlin Heidelberg.</p>
+                            <p>The Kaggle competition which this application is based on can be found <a href="http://www.kaggle.com/c/bike-sharing-demand">here</a>.</p>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="well">
+                    <h1>Model Summary</h1>
+                    <br />
+                    <pre><code id="modelSummary" class="r shiny-text-output"></code></pre>
+                </div>
+
+
+                <div class="well">
+                    <h1>Source Code</h1>
+                    <br />
+                    <p>
+                        The source code is available at <a href="https://github.com/ashic/bikeshare-data-product">github</a>.    
+                        <br />
+                        I have used a custom www\index.html for the UI code, which can be got by viewing the source of this page.
+                    </p>
+                    <p>
+                    The server.R code is given below:
+                    </p>
+                    <pre><code id="sourceCode" class="r shiny-html-output"></code></pre>
+                </div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
