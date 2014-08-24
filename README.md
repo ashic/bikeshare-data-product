@@ -1,7 +1,7 @@
 bikeshare-data-product
 ======================
 
-This is a partial (and interactive) solution to the Bike Share Demand Kaggle competition. The details of the problem can be found [here](http://www.kaggle.com/c/bike-sharing-demand/data).
+This is a partial (and interactive) solution to the Bike Share Demand Kaggle competition. The details of the problem can be found [here](http://www.kaggle.com/c/bike-sharing-demand/data). The finished product can be found [here](http://ashic.shinyapps.io/bikeshare/).
 
 We are given data sets consisting of data collection from bike sharing schemes over two years - between January, 2011 and December, 2012. The training data set (train.csv) corresponds to the first 19 days of each month, and the test data (test.csv) contains data about the remaining days. Features include the date and time (granular to the hour) of each record, and the season, weather condition, temperature, "feels like" temperature, windspeed, whether the day is a holiday or not, whether it is a workday (or not, i.e. a weekend), and humidity at that time. The training set also contains data on how many registered and non registered users rented a bike in that period, along with the total count. Based on this data, we are to come up with a training model that can predict the count of rentals for the test data set, at least - that's the target for the Kaggle competition.
 
