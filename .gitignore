@@ -2,5 +2,6 @@
 .Rhistory
 Thumbs.db
 shinyapps/
+.cache/
 
 
